@@ -531,11 +531,13 @@ function App() {
               {isProcessingPayment ? (
                 <div className="payment-processing">
                   <div className="loader"></div>
+                  <p className="payment-amount-display">Amount Due: <strong>₹{calculateTotal().toFixed(2)}</strong></p>
                   <p className="instruction-text">Processing...</p>
                 </div>
               ) : activePaymentMode === 'upi' ? (
                 <div className="upi-payment-section">
                   <p className="instruction-text">{t.scanInstructionUpi}</p>
+                  <p className="payment-amount-display">Amount Due: <strong>₹{calculateTotal().toFixed(2)}</strong></p>
                   <div className="qr-container">
                     <img
                       src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=vending@ybl&pn=SMART PDS&am=${calculateTotal().toFixed(2)}&cu=INR`)}`}
@@ -583,7 +585,7 @@ function App() {
               <h2 className="success-text">{t.paymentSuccess}</h2>
               <div className="success-bill">
                 <span className="success-bill-label">{t.totalPaid}</span>
-                <span className="success-bill-amount">₹{cart.reduce((sum, item) => sum + (item.price * item.weight), 0).toFixed(2)}</span>
+                <span className="success-bill-amount">₹{cart.reduce((sum, item) => sum + (item.price * item.selectedWeight), 0).toFixed(2)}</span>
               </div>
             </div>
           )}
