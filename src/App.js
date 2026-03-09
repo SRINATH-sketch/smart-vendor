@@ -55,7 +55,8 @@ const translations = {
     unitKg: "Kg",
     lowStockWarning: "Warning: Low Stock Detected!",
     itemLowStock: "capacity is below 15%!",
-    totalPaid: "Total Paid"
+    totalPaid: "Total Paid",
+    amountDue: "Amount Due"
   },
   ta: {
     title: "ஸ்மார்ட் பொது விநியோக அமைப்பு",
@@ -110,7 +111,8 @@ const translations = {
     unitKg: "கிலோ",
     lowStockWarning: "எச்சரிக்கை: குறைந்த இருப்பு!",
     itemLowStock: "இருப்பு 15% க்கும் குறைவாக உள்ளது!",
-    totalPaid: "செலுத்தப்பட்ட மொத்த தொகை"
+    totalPaid: "செலுத்தப்பட்ட மொத்த தொகை",
+    amountDue: "செலுத்த வேண்டிய தொகை"
   },
   hi: {
     title: "स्मार्ट सार्वजनिक वितरण प्रणाली",
@@ -165,7 +167,8 @@ const translations = {
     unitKg: "किग्रा",
     lowStockWarning: "चेतावनी: कम स्टॉक!",
     itemLowStock: "क्षमता 15% से कम है!",
-    totalPaid: "कुल भुगतान किया गया"
+    totalPaid: "कुल भुगतान किया गया",
+    amountDue: "देय राशि"
   }
 };
 
@@ -526,18 +529,18 @@ function App() {
           {currentScreen === 'payment' && (
             <div className="screen-content">
               <h2>{t.paymentTitle}</h2>
-              <h3 className="payment-amount">Amount Due: <strong>₹{calculateTotal().toFixed(2)}</strong></h3>
+              <h3 className="payment-amount">{t.amountDue}: <strong>₹{calculateTotal().toFixed(2)}</strong></h3>
 
               {isProcessingPayment ? (
                 <div className="payment-processing">
                   <div className="loader"></div>
-                  <p className="payment-amount-display">Amount Due: <strong>₹{calculateTotal().toFixed(2)}</strong></p>
+                  <p className="payment-amount-display">{t.amountDue}: <strong>₹{calculateTotal().toFixed(2)}</strong></p>
                   <p className="instruction-text">Processing...</p>
                 </div>
               ) : activePaymentMode === 'upi' ? (
                 <div className="upi-payment-section">
                   <p className="instruction-text">{t.scanInstructionUpi}</p>
-                  <p className="payment-amount-display">Amount Due: <strong>₹{calculateTotal().toFixed(2)}</strong></p>
+                  <p className="payment-amount-display">{t.amountDue}: <strong>₹{calculateTotal().toFixed(2)}</strong></p>
                   <div className="qr-container">
                     <img
                       src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=vending@ybl&pn=SMART PDS&am=${calculateTotal().toFixed(2)}&cu=INR`)}`}
