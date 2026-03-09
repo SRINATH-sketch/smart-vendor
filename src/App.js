@@ -42,7 +42,13 @@ const translations = {
       { id: 4, name: "Sugar", min: 1, max: 5, price: 20 },
       { id: 5, name: "Wheat", min: 1, max: 10, price: 5 }
     ],
-    addMore: "+ Add more"
+    addMore: "+ Add more",
+    cardDetailsTitle: "Smart Card Details",
+    cardHolderName: "Card Holder Name",
+    familyMembers: "No. of Family Members",
+    memberCount: "4",
+    cardHolderValue: "SRINATH G",
+    continue: "Continue"
   },
   ta: {
     title: "ஸ்மார்ட் பொது விநியோக அமைப்பு",
@@ -84,7 +90,13 @@ const translations = {
       { id: 4, name: "சர்க்கரை", min: 1, max: 5, price: 20 },
       { id: 5, name: "கோதுமை", min: 1, max: 10, price: 5 }
     ],
-    addMore: "+ மேலும் சேர்க்க"
+    addMore: "+ மேலும் சேர்க்க",
+    cardDetailsTitle: "ஸ்மார்ட் கார்டு விவரங்கள்",
+    cardHolderName: "அட்டைதாரர் பெயர்",
+    familyMembers: "குடும்ப உறுப்பினர்களின் எண்ணிக்கை",
+    memberCount: "4",
+    cardHolderValue: "ஸ்ரீநாத் ஜி",
+    continue: "தொடரவும்"
   },
   hi: {
     title: "स्मार्ट सार्वजनिक वितरण प्रणाली",
@@ -126,7 +138,13 @@ const translations = {
       { id: 4, name: "चीनी", min: 1, max: 5, price: 20 },
       { id: 5, name: "गेहूँ", min: 1, max: 10, price: 5 }
     ],
-    addMore: "+ और जोड़ें"
+    addMore: "+ और जोड़ें",
+    cardDetailsTitle: "स्मार्ट कार्ड विवरण",
+    cardHolderName: "कार्ड धारक का नाम",
+    familyMembers: "परिवार के सदस्यों की संख्या",
+    memberCount: "4",
+    cardHolderValue: "श्रीनाथ जी",
+    continue: "जारी रखें"
   }
 };
 
@@ -248,8 +266,29 @@ function App() {
               </div>
 
               <div className="machine-panel">
-                <button className="action-btn select-btn" onClick={() => setCurrentScreen('otp')}>{t.scanBtn}</button>
+                <button className="action-btn select-btn" onClick={() => setCurrentScreen('card-details')}>{t.scanBtn}</button>
                 <button className="action-btn back-btn" onClick={() => setCurrentScreen('home')}>{t.back}</button>
+              </div>
+            </div>
+          )}
+
+          {currentScreen === 'card-details' && (
+            <div className="screen-content">
+              <h2>{t.cardDetailsTitle}</h2>
+              <div className="card-details-display">
+                <div className="detail-row">
+                  <span className="detail-label">{t.cardHolderName}</span>
+                  <span className="detail-value">{t.cardHolderValue}</span>
+                </div>
+                <div className="detail-row">
+                  <span className="detail-label">{t.familyMembers}</span>
+                  <span className="detail-value">{t.memberCount}</span>
+                </div>
+              </div>
+
+              <div className="machine-panel">
+                <button className="action-btn dispense-btn" onClick={() => setCurrentScreen('otp')}>{t.continue}</button>
+                <button className="action-btn back-btn" onClick={() => setCurrentScreen('qr')}>{t.back}</button>
               </div>
             </div>
           )}
