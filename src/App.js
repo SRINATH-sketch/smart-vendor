@@ -54,7 +54,8 @@ const translations = {
     currentStock: "Current Stock",
     unitKg: "Kg",
     lowStockWarning: "Warning: Low Stock Detected!",
-    itemLowStock: "capacity is below 15%!"
+    itemLowStock: "capacity is below 15%!",
+    totalPaid: "Total Paid"
   },
   ta: {
     title: "ஸ்மார்ட் பொது விநியோக அமைப்பு",
@@ -108,7 +109,8 @@ const translations = {
     currentStock: "தற்போதைய இருப்பு",
     unitKg: "கிலோ",
     lowStockWarning: "எச்சரிக்கை: குறைந்த இருப்பு!",
-    itemLowStock: "இருப்பு 15% க்கும் குறைவாக உள்ளது!"
+    itemLowStock: "இருப்பு 15% க்கும் குறைவாக உள்ளது!",
+    totalPaid: "செலுத்தப்பட்ட மொத்த தொகை"
   },
   hi: {
     title: "स्मार्ट सार्वजनिक वितरण प्रणाली",
@@ -162,7 +164,8 @@ const translations = {
     currentStock: "वर्तमान स्टॉक",
     unitKg: "किग्रा",
     lowStockWarning: "चेतावनी: कम स्टॉक!",
-    itemLowStock: "क्षमता 15% से कम है!"
+    itemLowStock: "क्षमता 15% से कम है!",
+    totalPaid: "कुल भुगतान किया गया"
   }
 };
 
@@ -578,6 +581,10 @@ function App() {
                 </div>
               </div>
               <h2 className="success-text">{t.paymentSuccess}</h2>
+              <div className="success-bill">
+                <span className="success-bill-label">{t.totalPaid}</span>
+                <span className="success-bill-amount">₹{cart.reduce((sum, item) => sum + (item.price * item.weight), 0).toFixed(2)}</span>
+              </div>
             </div>
           )}
 
