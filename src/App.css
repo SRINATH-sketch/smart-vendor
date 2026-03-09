@@ -727,6 +727,62 @@ h1 {
   background: linear-gradient(to right, #ff7675, #d63031);
 }
 
+.low-stock-alert {
+  background: linear-gradient(135deg, #d63031, #c0392b);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(214, 48, 49, 0.4);
+  animation: pulseWarning 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.low-stock-alert:hover {
+  transform: scale(1.02);
+}
+
+.warning-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+.warning-content {
+  text-align: left;
+}
+
+.warning-content strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.low-stock-items {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+@keyframes pulseWarning {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px rgba(214, 48, 49, 0.4);
+  }
+
+  50% {
+    transform: scale(1.01);
+    box-shadow: 0 15px 35px rgba(214, 48, 49, 0.6);
+    background: linear-gradient(135deg, #ff4757, #ff6b81);
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

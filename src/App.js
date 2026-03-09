@@ -52,7 +52,9 @@ const translations = {
     capacityTitle: "Machine Capacity Dashboard",
     totalCapacity: "Total Capacity",
     currentStock: "Current Stock",
-    unitKg: "Kg"
+    unitKg: "Kg",
+    lowStockWarning: "Warning: Low Stock Detected!",
+    itemLowStock: "capacity is below 15%!"
   },
   ta: {
     title: "ஸ்மார்ட் பொது விநியோக அமைப்பு",
@@ -104,7 +106,9 @@ const translations = {
     capacityTitle: "இயந்திரத்தின் கொள்ளளவு",
     totalCapacity: "மொத்த கொள்ளளவு",
     currentStock: "தற்போதைய இருப்பு",
-    unitKg: "கிலோ"
+    unitKg: "கிலோ",
+    lowStockWarning: "எச்சரிக்கை: குறைந்த இருப்பு!",
+    itemLowStock: "இருப்பு 15% க்கும் குறைவாக உள்ளது!"
   },
   hi: {
     title: "स्मार्ट सार्वजनिक वितरण प्रणाली",
@@ -156,7 +160,9 @@ const translations = {
     capacityTitle: "मशीन क्षमता डैशबोर्ड",
     totalCapacity: "कुल क्षमता",
     currentStock: "वर्तमान स्टॉक",
-    unitKg: "किग्रा"
+    unitKg: "किग्रा",
+    lowStockWarning: "चेतावनी: कम स्टॉक!",
+    itemLowStock: "क्षमता 15% से कम है!"
   }
 };
 
@@ -178,7 +184,7 @@ function App() {
     { id: 1, total: 500, current: 345 },
     { id: 2, total: 500, current: 120 },
     { id: 3, total: 200, current: 180 },
-    { id: 4, total: 200, current: 45 },
+    { id: 4, total: 200, current: 20 }, // Sugar is now 10% (below 15% threshold)
     { id: 5, total: 300, current: 210 }
   ]);
 
@@ -275,6 +281,20 @@ function App() {
 
           {currentScreen === 'home' && (
             <>
+              {inventory.some(item => (item.current / item.total) < 0.15) && (
+                <div className="low-stock-alert" onClick={() => setCurrentScreen('capacity')}>
+                  <span className="warning-icon">⚠️</span>
+                  <div className="warning-content">
+                    <strong>{t.lowStockWarning}</strong>
+                    <div className="low-stock-items">
+                      {inventory
+                        .filter(item => (item.current / item.total) < 0.15)
+                        .map(item => t.items.find(i => i.id === item.id)?.name)
+                        .join(', ')} {t.itemLowStock}
+                    </div>
+                  </div>
+                </div>
+              )}
               <p className="welcome-text">{t.welcome}</p>
               <p className="select-text">{t.select}</p>
               <div className="machine-panel">
