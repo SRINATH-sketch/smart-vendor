@@ -48,7 +48,11 @@ const translations = {
     familyMembers: "No. of Family Members",
     memberCount: "4",
     cardHolderValue: "SRINATH G",
-    continue: "Continue"
+    continue: "Continue",
+    capacityTitle: "Machine Capacity Dashboard",
+    totalCapacity: "Total Capacity",
+    currentStock: "Current Stock",
+    unitKg: "Kg"
   },
   ta: {
     title: "ஸ்மார்ட் பொது விநியோக அமைப்பு",
@@ -96,7 +100,11 @@ const translations = {
     familyMembers: "குடும்ப உறுப்பினர்களின் எண்ணிக்கை",
     memberCount: "4",
     cardHolderValue: "ஸ்ரீநாத் ஜி",
-    continue: "தொடரவும்"
+    continue: "தொடரவும்",
+    capacityTitle: "இயந்திரத்தின் கொள்ளளவு",
+    totalCapacity: "மொத்த கொள்ளளவு",
+    currentStock: "தற்போதைய இருப்பு",
+    unitKg: "கிலோ"
   },
   hi: {
     title: "स्मार्ट सार्वजनिक वितरण प्रणाली",
@@ -144,7 +152,11 @@ const translations = {
     familyMembers: "परिवार के सदस्यों की संख्या",
     memberCount: "4",
     cardHolderValue: "श्रीनाथ जी",
-    continue: "जारी रखें"
+    continue: "जारी रखें",
+    capacityTitle: "मशीन क्षमता डैशबोर्ड",
+    totalCapacity: "कुल क्षमता",
+    currentStock: "वर्तमान स्टॉक",
+    unitKg: "किग्रा"
   }
 };
 
@@ -162,6 +174,13 @@ function App() {
   const [activePaymentMode, setActivePaymentMode] = useState(null);
   const [theme, setTheme] = useState('dark');
   const [itemWeights, setItemWeights] = useState({});
+  const [inventory, setInventory] = useState([
+    { id: 1, total: 500, current: 345 },
+    { id: 2, total: 500, current: 120 },
+    { id: 3, total: 200, current: 180 },
+    { id: 4, total: 200, current: 45 },
+    { id: 5, total: 300, current: 210 }
+  ]);
 
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
@@ -226,6 +245,16 @@ function App() {
   return (
     <div className={`App theme-${theme}`}>
       <header className="App-header">
+        <div className="capacity-toggle">
+          <button
+            onClick={() => setCurrentScreen(currentScreen === 'capacity' ? 'home' : 'capacity')}
+            title={t.capacityTitle}
+            className={currentScreen === 'capacity' ? 'active' : ''}
+          >
+            📊
+          </button>
+        </div>
+
         <div className="language-selector">
           <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>English</button>
           <button className={lang === 'ta' ? 'active' : ''} onClick={() => setLang('ta')}>தமிழ்</button>
@@ -252,6 +281,37 @@ function App() {
                 <button className="action-btn select-btn" onClick={() => setCurrentScreen('qr')}>{t.startBtn}</button>
               </div>
             </>
+          )}
+
+          {currentScreen === 'capacity' && (
+            <div className="screen-content capacity-screen">
+              <h2>{t.capacityTitle}</h2>
+              <div className="inventory-list">
+                {inventory.map(itemInv => {
+                  const item = t.items.find(i => i.id === itemInv.id);
+                  const percentage = (itemInv.current / itemInv.total) * 100;
+                  return (
+                    <div key={itemInv.id} className="inventory-item">
+                      <div className="inventory-header">
+                        <span className="inventory-name">{item?.name}</span>
+                        <span className="inventory-values">
+                          {itemInv.current} / {itemInv.total} {t.unitKg}
+                        </span>
+                      </div>
+                      <div className="progress-container">
+                        <div
+                          className={`progress-bar ${percentage < 20 ? 'critical' : percentage < 50 ? 'low' : ''}`}
+                          style={{ width: `${percentage}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="machine-panel">
+                <button className="action-btn back-btn" onClick={() => setCurrentScreen('home')}>{t.back}</button>
+              </div>
+            </div>
           )}
 
           {currentScreen === 'qr' && (
